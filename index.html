@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Python тесті</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #eef3f9;
+  margin: 0;
+  padding: 20px;
+}
+.container {
+  max-width: 850px;
+  margin: auto;
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+}
+h1 { color: #2457a7; text-align: center; }
+h2 { color: #167d69; }
+.question {
+  border: 1px solid #d5dfec;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 15px 0;
+}
+pre {
+  background: #f2f4f8;
+  padding: 12px;
+  border-radius: 7px;
+  overflow-x: auto;
+}
+label {
+  display: block;
+  padding: 7px;
+  cursor: pointer;
+}
+button {
+  background: #2457a7;
+  color: white;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+#result {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Python тілінен тест</h1>
+<p><b>Тақырып:</b> for + if және while + if</p>
+<p>Әр сұраққа бір дұрыс жауапты таңдаңыз.</p>
+
+<form id="quiz">
+<div id="questions"></div>
+<button type="submit">Тестті аяқтау</button>
+</form>
+<div id="result"></div>
+</div>
+
+<script>
+const data = [
+["for i in range(1, 6):\n    if i % 2 == 0:\n        print(i, end=' ')",
+"Экранға не шығады?",["1 3 5","2 4","1 2 3 4 5","2 3 4"],1],
+["for i in range(1, 5):\n    if i > 2:\n        print(i)",
+"Қандай сандар шығады?",["1 2","3 4","2 3 4","4"],1],
+["s = 0\nfor i in range(1, 5):\n    if i < 4:\n        s += i\nprint(s)",
+"s мәні қандай?",["4","10","6","7"],2],
+["for i in range(1, 6):\n    if i % 2 == 1:\n        print(i * 2, end=' ')",
+"Нәтижесі қандай?",["2 4 6 8 10","1 3 5","2 6 10","4 8"],2],
+["x = 0\nfor i in range(1, 6):\n    if i >= 3:\n        x += 1\nprint(x)",
+"x мәні қандай?",["2","3","5","6"],1],
+["for i in range(2, 7):\n    if i % 3 == 0:\n        print(i, end=' ')",
+"Қандай сандар шығады?",["2 3 4 5 6","3 6","2 5","6"],1],
+["for i in range(1, 5):\n    if i * i > 8:\n        print(i, end=' ')",
+"Нәтижесі қандай?",["1 2","2 3","3 4","4"],2],
+["n = 0\nfor i in range(1, 6):\n    if i % 2 == 1:\n        n += i\nprint(n)",
+"n мәні қандай?",["6","9","15","5"],1],
+["for i in range(1, 4):\n    if i == 2:\n        print('Сәлем', end=' ')\n    else:\n        print(i, end=' ')",
+"Нәтижесі қандай?",["1 Сәлем 3","Сәлем 2 3","1 2 3","Сәлем"],0],
+["for i in range(1, 6):\n    if i > 2 and i < 5:\n        print(i, end=' ')",
+"Нәтижесі қандай?",["1 2","3 4","2 3 4 5","3 4 5"],1],
+["i = 1\nwhile i <= 5:\n    if i % 2 == 0:\n        print(i, end=' ')\n    i += 1",
+"Қандай сандар шығады?",["1 3 5","2 4","1 2 3 4 5","4 5"],1],
+["i = 1\ns = 0\nwhile i <= 4:\n    if i > 2:\n        s += i\n    i += 1\nprint(s)",
+"s мәні қандай?",["3","7","9","10"],1],
+["n = 5\nwhile n > 0:\n    if n < 4:\n        print(n, end=' ')\n    n -= 1",
+"Нәтижесі қандай?",["5 4","3 2 1","4 3 2 1","1 2 3"],1],
+["i = 0\nwhile i < 6:\n    if i % 3 == 0:\n        print(i, end=' ')\n    i += 1",
+"Қандай сандар шығады?",["0 3","1 2 4 5","3 6","0 1 2 3 4 5"],0],
+["i = 1\ncount = 0\nwhile i <= 6:\n    if i >= 4:\n        count += 1\n    i += 1\nprint(count)",
+"count мәні қандай?",["2","3","4","6"],1],
+["x = 10\nwhile x > 4:\n    if x % 2 == 0:\n        print(x, end=' ')\n    x -= 2",
+"Нәтижесі қандай?",["10 8 6","10 9 8 7 6","8 6 4","10 8 6 4"],0],
+["i = 1\nwhile i <= 5:\n    if i * 2 >= 6:\n        print(i, end=' ')\n    i += 1",
+"Нәтижесі қандай?",["1 2","3 4 5","2 3 4 5","6 8 10"],1],
+["i = 1\ntotal = 0\nwhile i <= 5:\n    if i % 2 == 0:\n        total += i\n    i += 1\nprint(total)",
+"total мәні қандай?",["6","9","15","2"],0],
+["i = 3\nwhile i >= 0:\n    if i == 1:\n        print('X', end=' ')\n    else:\n        print(i, end=' ')\n    i -= 1",
+"Нәтижесі қандай?",["3 2 X 0","0 X 2 3","3 2 1 0","X X X"],0],
+["n = 1\nwhile n <= 8:\n    if n % 2 == 0 and n > 4:\n        print(n, end=' ')\n    n += 1",
+"Нәтижесі қандай?",["2 4 6 8","6 8","5 6 7 8","8"],1]
+];
+
+const root = document.getElementById("questions");
+
+data.forEach((q, i) => {
+  if (i === 0 || i === 10) {
+    const heading = document.createElement("h2");
+    heading.textContent = i === 0 ? "I бөлім. for + if" : "II бөлім. while + if";
+    root.appendChild(heading);
+  }
+
+  const box = document.createElement("div");
+  box.className = "question";
+  box.innerHTML = `<b>${i + 1}. ${q[1]}</b>
+    <pre></pre><div class="options"></div><p class="feedback"></p>`;
+  box.querySelector("pre").textContent = q[0];
+
+  q[2].forEach((option, j) => {
+    const label = document.createElement("label");
+    label.innerHTML = `<input type="radio" name="q${i}" value="${j}"> ${String.fromCharCode(65+j)}) `;
+    label.appendChild(document.createTextNode(option));
+    box.querySelector(".options").appendChild(label);
+  });
+  root.appendChild(box);
+});
+
+document.getElementById("quiz").addEventListener("submit", function(e) {
+  e.preventDefault();
+  let score = 0;
+  data.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    const feedback = root.children[i < 10 ? i + 1 : i + 2]
+      ?.querySelector?.(".feedback");
+    // Сұрақ контейнерін атауы арқылы табамыз.
+    const boxes = root.querySelectorAll(".question");
+    const msg = boxes[i].querySelector(".feedback");
+    if (selected && Number(selected.value) === q[3]) {
+      score++;
+      msg.textContent = "Дұрыс жауап!";
+      msg.style.color = "green";
+    } else {
+      msg.textContent = "Дұрыс жауап: " + q[2][q[3]];
+      msg.style.color = "red";
+    }
+  });
+  document.getElementById("result").textContent =
+    `Нәтиже: ${score} / ${data.length} ұпай`;
+});
+</script>
+</body>
+</html>
